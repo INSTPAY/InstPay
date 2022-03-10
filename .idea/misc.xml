@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Studio/InstPay/app/src/main/res/drawable/ic_credit_card.xml" value="0.1685" />
+        <entry key="..\:/Android Studio/InstPay/app/src/main/res/drawable/ic_upi.xml" value="0.1685" />
+        <entry key="..\:/Android Studio/InstPay/app/src/main/res/layout/activity_home.xml" value="0.4" />
         <entry key="..\:/Android Studio/InstPay/app/src/main/res/layout/activity_main.xml" value="0.26851851851851855" />
       </map>
     </option>
