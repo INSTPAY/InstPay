@@ -1,28 +1,29 @@
 package com.instpay.app.Models;
 
-import java.util.ArrayList;
-
 public class User {
-    private String id, name, email, profilePic, aadhaarNo, panNo;
-    private double mainBal;
-    private ArrayList<Transaction> transactions;
+    private String _id, name, email, phone, account, dob, photo, aadhaar, pan, address, pin;
+    private double balance;
 
     public User() {}
 
-    public User(String id, String name, String email) {
-        this.id = id;
+    public User(String name, String email, String phone, String dob, String address, String aadhaar, String pan, String pin) {
         this.name = name;
         this.email = email;
-        this.mainBal = 0;
-        this.transactions = new ArrayList<>();
+        this.phone = phone;
+        this.dob = dob;
+        this.address = address;
+        this.aadhaar = aadhaar;
+        this.pan = pan;
+        this.pin = pin;
+        this.balance = 0;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -41,43 +42,75 @@ public class User {
         this.email = email;
     }
 
-    public String getProfilePic() {
-        return profilePic;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getAadhaarNo() {
-        return aadhaarNo;
+    public String getAadhaar() {
+        return aadhaar;
     }
 
-    public void setAadhaarNo(String aadhaarNo) {
-        this.aadhaarNo = aadhaarNo;
+    public void setAadhaar(String aadhaar) {
+        this.aadhaar = aadhaar;
     }
 
-    public String getPanNo() {
-        return panNo;
+    public String getPan() {
+        return pan;
     }
 
-    public void setPanNo(String panNo) {
-        this.panNo = panNo;
+    public void setPan(String pan) {
+        this.pan = pan;
     }
 
-    public double getMainBal() {
-        return mainBal;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setMainBal(double mainBal) {
-        this.mainBal = mainBal;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 }

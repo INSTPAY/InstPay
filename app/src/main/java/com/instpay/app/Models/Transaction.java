@@ -3,17 +3,18 @@ package com.instpay.app.Models;
 public class Transaction {
     private String id, from, to, amount;
     private long date;
-    private int type;
+    private int type, method;
 
     public Transaction() {}
 
-    public Transaction(String id, String from, String to, String amount, int type) {
+    public Transaction(String id, String from, String to, String amount, int type, int method) {
         this.id = id;
         this.from = from;
         this.to = to;
         this.amount = amount;
         this.date = System.currentTimeMillis();
         this.type = type;
+        this.method = method;
     }
 
     public String getId() {
@@ -62,5 +63,13 @@ public class Transaction {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public void setMethod(int method) {
+        this.method = method;
     }
 }

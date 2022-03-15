@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Activities.SignupActivity">
+
+    <LinearLayout
+        android:id="@+id/detailsArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/uName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter name"
+            android:inputType="textPersonName|textCapWords"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/uEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/uPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter phone"
+            android:inputType="phone"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/uDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="Enter date of birth"
+            android:inputType="date"
+            android:minHeight="48dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/uAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="Enter street, city, district, state, pin"
+            android:inputType="textPostalAddress|textCapWords"
+            android:minHeight="48dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/uAadhaar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter Aadhaar No"
+            android:inputType="number"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/uPan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter PAN No"
+            android:inputType="textCapCharacters"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/setPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            app:cornerRadius="50dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passwordArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/createPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Create pin (6 digit)"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/confirmPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Confirm pin"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:minHeight="48dp" />
+
+        <CheckBox
+            android:id="@+id/keepLoggedInSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            android:checked="true"
+            android:minHeight="0dp"
+            android:text="Keep me logged in"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:text="Back"
+                app:cornerRadius="50dp" />
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:text="Create Account"
+                app:cornerRadius="50dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
