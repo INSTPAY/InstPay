@@ -1,90 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:fillViewport="true"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".Activities.SignupActivity">
-
-    <EditText
-        android:id="@+id/accountNo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext_bg"
-        android:ems="10"
-        android:hint="Enter account No"
-        android:inputType="numberSigned"
-        android:maxLength="13"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/mPin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext_bg"
-        android:ems="10"
-        android:hint="Enter pin"
-        android:inputType="numberPassword"
-        android:maxLength="6"
-        android:minHeight="48dp" />
-
-    <CheckBox
-        android:id="@+id/keepLoggedIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginBottom="8dp"
-        android:checked="true"
-        android:minHeight="0dp"
-        android:text="Keep me logged in"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="login"
-        app:cornerRadius="50dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@android:color/darker_gray" />
+        <EditText
+            android:id="@+id/accountNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter account No"
+            android:inputType="numberSigned"
+            android:maxLength="13"
+            android:minHeight="48dp" />
 
-        <TextView
+        <EditText
+            android:id="@+id/mPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Enter pin"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:minHeight="48dp" />
+
+        <CheckBox
+            android:id="@+id/keepLoggedIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Or"
-            android:textColor="@android:color/darker_gray" />
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            android:checked="true"
+            android:minHeight="0dp"
+            android:text="Keep me logged in"
+            tools:ignore="TouchTargetSizeCheck" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@android:color/darker_gray" />
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="login"
+            app:cornerRadius="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Or"
+                android:textColor="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/signupBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            app:cornerRadius="50dp" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/signupBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Account"
-        app:cornerRadius="50dp" />
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

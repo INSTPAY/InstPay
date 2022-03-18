@@ -1,28 +1,26 @@
 package com.instpay.app.Models;
 
+import static com.instpay.app.App.ME;
+
 public class Transaction {
-    private String id, from, to, amount;
-    private long date;
-    private int type, method;
+    private String _id, from, to, createdAt;
+    private double amount;
 
     public Transaction() {}
 
-    public Transaction(String id, String from, String to, String amount, int type, int method) {
-        this.id = id;
-        this.from = from;
+    public Transaction(String _id, String to, double amount) {
+        this._id = _id;
+        this.from = ME.getAccount();
         this.to = to;
         this.amount = amount;
-        this.date = System.currentTimeMillis();
-        this.type = type;
-        this.method = method;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getFrom() {
@@ -41,35 +39,19 @@ public class Transaction {
         this.to = to;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public long getDate() {
-        return date;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(long date) {
-        this.date = date;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getMethod() {
-        return method;
-    }
-
-    public void setMethod(int method) {
-        this.method = method;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

@@ -2,10 +2,13 @@
     <string name="app_name">InstPay</string>
     <string name="shared_preference_auth">Authentication</string>
 
+    <!--    API Urls    -->
     <string name="auth_login_url">https://api.instpay.repl.co/auth/login</string>
     <string name="auth_signup_url">https://api.instpay.repl.co/auth/signup</string>
-    <string name="user_url">https://api.instpay.repl.co/account</string>
+    <string name="my_account_url">https://api.instpay.repl.co/account</string>
+    <string name="receiver_account_url">https://api.instpay.repl.co/account/receiver</string>
+    <string name="payment_url">https://api.instpay.repl.co/payment/send</string>
     <string name="all_transactions_url">https://api.instpay.repl.co/payment/transactions</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all_payees_url">https://api.instpay.repl.co/payment/payees</string>
+    <string name="payees_transactions">https://api.instpay.repl.co/payment/payees/transactions</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.instpay.app.Models;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class User {
     private String _id, name, email, phone, account, dob, photo, aadhaar, pan, address, pin;
     private double balance;

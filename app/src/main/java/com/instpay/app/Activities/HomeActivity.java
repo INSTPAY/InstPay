@@ -5,46 +5,49 @@ import static com.instpay.app.App.USER_TOKEN;
 import static com.instpay.app.App.requestQueue;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.Menu;
+import android.widget.ImageView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.instpay.app.Adapters.TransactionAdapter;
-import com.instpay.app.Models.Transaction;
+import com.instpay.app.Adapters.PayeesAdapter;
 import com.instpay.app.Models.User;
 import com.instpay.app.R;
 import com.instpay.app.databinding.ActivityHomeBinding;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = HomeActivity.class.getSimpleName();
     ActivityHomeBinding binding;
-    ArrayList<Transaction> transactions;
+    ArrayList<User> payees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setSupportActionBar(binding.homeToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        transactions = new ArrayList<>();
-        binding.transactions.setLayoutManager(new LinearLayoutManager(this));
+        payees = new ArrayList<>();
+        binding.allPayees.setLayoutManager(new GridLayoutManager(this, 4));
+        binding.allPayees.setAdapter(new PayeesAdapter(payees, payee -> startActivity(new Intent(this, PayeeTransactionsActivity.class).putExtra("PAYEE", Parcels.wrap(payee)))));
 
         binding.userName.setText(ME.getName());
         binding.userAcNo.setText(ME.getAccount());
@@ -52,20 +55,15 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.qrCode.setOnClickListener(v -> startActivity(new Intent(this, QRCodeActivity.class)));
 
-        fetchTransactions();
-    }
-
-    private void fetchTransactions(){
-        JsonArrayRequest userRequest = new JsonArrayRequest(Request.Method.POST, getString(R.string.all_transactions_url), null, response -> {
-            for(int i=0; i<response.length(); i++) {
+        JsonArrayRequest userRequest = new JsonArrayRequest(Request.Method.POST, getString(R.string.all_payees_url), null, response -> {
+            for (int i=0; i<response.length(); i++){
                 try {
-                    transactions.add(new Gson().fromJson(response.get(i).toString(), Transaction.class));
+                    payees.add(new Gson().fromJson(response.getJSONObject(i).toString(), User.class));
+                    if (binding.allPayees.getAdapter() != null) binding.allPayees.getAdapter().notifyItemInserted(payees.size()-1);
                 } catch (JSONException e) {e.printStackTrace();}
             }
-            binding.transactions.setAdapter(new TransactionAdapter(transactions));
         }, error -> {
             Log.d(TAG, "error: ", error);
-            Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }){
             @Override
             public byte[] getBody() {
@@ -79,7 +77,15 @@ public class HomeActivity extends AppCompatActivity {
                 return object.toString().getBytes(StandardCharsets.UTF_8);
             }
         };
-
+        userRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(userRequest);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        Glide.with(this).load(ME.getPhoto()).placeholder(R.drawable.ic_person).into((ImageView) menu.findItem(R.id.profileBtn).getActionView().findViewById(R.id.profileMenuBtnPhoto));
+        menu.findItem(R.id.profileBtn).setTitle(ME.getName());
+        return super.onCreateOptionsMenu(menu);
     }
 }

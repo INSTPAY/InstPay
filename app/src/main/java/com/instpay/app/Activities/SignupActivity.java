@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
@@ -98,7 +99,7 @@ public class SignupActivity extends AppCompatActivity {
                 binding.createPin.setError("Please enter a 6 digit pin!");
                 return;
             }
-            if (binding.confirmPin.getText().toString().trim().equals(binding.confirmPin.getText().toString().trim())){
+            if (!binding.confirmPin.getText().toString().trim().equals(binding.confirmPin.getText().toString().trim())){
                 binding.confirmPin.setError("Pins doesn't match!");
                 return;
             }
@@ -114,12 +115,12 @@ public class SignupActivity extends AppCompatActivity {
                     editor.apply();
                 }
 
-                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.user_url), null, userResponse -> {
+                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.my_account_url), null, userResponse -> {
                     ME = new Gson().fromJson(userResponse.toString(), User.class);
                     startActivity(new Intent(this, HomeActivity.class));
+                    finish();
                 }, error -> {
                     Log.d(TAG, "error: ", error);
-                    Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }){
                     @Override
                     public byte[] getBody() {
@@ -133,11 +134,10 @@ public class SignupActivity extends AppCompatActivity {
                         return object.toString().getBytes(StandardCharsets.UTF_8);
                     }
                 };
-
+                userRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 requestQueue.add(userRequest);
             }, error -> {
                 Log.d(TAG, "error: ", error);
-                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }){
                 @Override
                 public byte[] getBody() {
@@ -145,7 +145,6 @@ public class SignupActivity extends AppCompatActivity {
                     return new Gson().toJson(user).getBytes(StandardCharsets.UTF_8);
                 }
             };
-
             requestQueue.add(authRequest);
         });
     }

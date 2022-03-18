@@ -18,10 +18,11 @@
     <color name="yellow">#FFFFFF00</color>
     <color name="pink">#FFFF1493</color>
     <color name="royalBlue">#FF4169E1</color>
+    <color name="lightBlue">#FF00A2FE</color>
     <color name="magenta">#FFFF00FF</color>
     <color name="violet">#FFEE82EE</color>
     <color name="grey">#FF808080</color>
-    <color name="grey_lite">#FFA0A0A0</color>
+    <color name="grey_lite">#E0E0E0</color>
     <color name="transparent">#00000000</color>
     <color name="alice_blue">#FFF0F8FF</color>
 </resources>

@@ -57,9 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                     editor.apply();
                 }
 
-                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.user_url), null, userResponse -> {
+                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.my_account_url), null, userResponse -> {
                     ME = new Gson().fromJson(userResponse.toString(), User.class);
                     startActivity(new Intent(this, HomeActivity.class));
+                    finish();
                 }, error -> {
                     Log.d("TAG", "error: ", error);
                     Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
