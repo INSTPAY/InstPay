@@ -49,6 +49,17 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/paymentNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:drawableTint="?attr/colorOnPrimary"
+                android:singleLine="true"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/paymentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

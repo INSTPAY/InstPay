@@ -1,7 +1,7 @@
 package com.instpay.app.Fragments;
 
 import static com.instpay.app.App.ME;
-import static com.instpay.app.App.USER_TOKEN;
+import static com.instpay.app.App.MY_TOKEN;
 import static com.instpay.app.App.requestQueue;
 
 import android.content.Intent;
@@ -20,14 +20,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.budiyev.android.codescanner.AutoFocusMode;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.ScanMode;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.instpay.app.Activities.PaymentActivity;
 import com.instpay.app.Models.User;
 import com.instpay.app.R;
 import com.instpay.app.databinding.FragmentScanCodeBinding;
-import com.instpay.app.databinding.FragmentShowCodeBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +66,7 @@ public class ScanCodeFragment extends Fragment {
                     try {
                         object.put("receiver", result.getText());
                         object.put("account", ME.getAccount());
-                        object.put("token", USER_TOKEN);
+                        object.put("token", MY_TOKEN);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -82,9 +80,6 @@ public class ScanCodeFragment extends Fragment {
             Log.e("TAG", "Scanner Error: ", error);
             Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
-
-        scanner.startPreview();
-
         return binding.getRoot();
     }
 

@@ -1,7 +1,7 @@
 package com.instpay.app.Activities;
 
-import static com.instpay.app.App.ME;
-import static com.instpay.app.App.USER_TOKEN;
+import static com.instpay.app.App.MY_ACCOUNT;
+import static com.instpay.app.App.MY_TOKEN;
 import static com.instpay.app.App.requestQueue;
 
 import android.content.Intent;
@@ -16,8 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.instpay.app.Models.User;
 import com.instpay.app.R;
 import com.instpay.app.databinding.ActivityMainBinding;
 
@@ -38,33 +36,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         preferences = getSharedPreferences(getString(R.string.shared_preference_auth), MODE_PRIVATE);
 
-        if (preferences.contains("account") && preferences.contains("token")) {
-            USER_TOKEN = preferences.getString("token", null);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, getString(R.string.my_account_url), null, response -> {
-                ME = new Gson().fromJson(response.toString(), User.class);
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
-            }, error -> {
-                Log.d("TAG", "error: ", error);
-            }){
-                @Override
-                public byte[] getBody() {
-                    JSONObject object = new JSONObject();
-                    try {
-                        object.put("account",preferences.getString("account", null));
-                        object.put("token",preferences.getString("token", null));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    return object.toString().getBytes(StandardCharsets.UTF_8);
-                }
-            };
-            request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(request);
+        MY_ACCOUNT = preferences.getString("account", null);
+        MY_TOKEN = preferences.getString("token", null);
+
+        if (MY_ACCOUNT != null && MY_TOKEN != null) {
+            fetchAccount();
         } else {
             new Handler().postDelayed(() -> {
                 startActivity(new Intent(this, LoginActivity.class));
+                finish();
             }, 1500);
         }
+    }
+
+    private void fetchAccount() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, getString(R.string.my_account_url), null, response -> {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }, error -> {
+            Log.d(TAG, "error: ", error);
+            if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.shared_preference_auth), MODE_PRIVATE).edit();
+                editor.remove("account");
+                editor.remove("token");
+                editor.apply();
+                startActivity(new Intent(this, LoginActivity.class));
+            } else {
+                Toast.makeText(this, "Server error! We are retrying.", Toast.LENGTH_SHORT).show();
+                fetchAccount();
+            }
+            finish();
+        }){
+            @Override
+            public byte[] getBody() {
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("account", MY_ACCOUNT);
+                    object.put("token", MY_TOKEN);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return object.toString().getBytes(StandardCharsets.UTF_8);
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
     }
 }

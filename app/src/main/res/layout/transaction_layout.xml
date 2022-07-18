@@ -19,7 +19,7 @@
         app:strokeWidth="1dp">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/historyPayeePhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -38,26 +38,35 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/historyTransactionTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:layout_weight="1"
-                android:text="Money send to Atanu Debnath"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/historyTransactionAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:text="-50.00"
-                android:textColor="?attr/colorPrimary"
+                android:singleLine="true"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="12 March, 2022"
-            android:textSize="10sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/historyTransactionDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:singleLine="true"
+                android:textSize="12sp" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

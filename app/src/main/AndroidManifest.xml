@@ -18,9 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InstPay">
         <activity
+            android:name=".Activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.TransactionDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.PayeeTransactionsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Activities.PaymentActivity"
             android:exported="false"

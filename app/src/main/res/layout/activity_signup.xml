@@ -105,7 +105,7 @@
                 android:id="@+id/setPin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="Send Otp"
                 app:cornerRadius="50dp" />
         </LinearLayout>
 
@@ -116,6 +116,53 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/otp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_bg"
+                        android:ems="10"
+                        android:hint="Enter OTP"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:minHeight="48dp"
+                        android:textAlignment="center" />
+
+                    <Button
+                        android:id="@+id/verifyBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="4dp"
+                        android:text="Verify"
+                        app:cornerRadius="50dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="A 6 digit OTP send to your email address. Please enter that OTP for verification."
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/createPin"
                 android:layout_width="match_parent"
@@ -123,6 +170,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="Create pin (6 digit)"
                 android:inputType="numberPassword"
                 android:maxLength="6"
@@ -135,6 +183,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="Confirm pin"
                 android:inputType="numberPassword"
                 android:maxLength="6"
@@ -147,6 +196,7 @@
                 android:layout_gravity="start"
                 android:layout_marginBottom="8dp"
                 android:checked="true"
+                android:enabled="false"
                 android:minHeight="0dp"
                 android:text="Keep me logged in"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -171,6 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
+                    android:enabled="false"
                     android:text="Create Account"
                     app:cornerRadius="50dp" />
 

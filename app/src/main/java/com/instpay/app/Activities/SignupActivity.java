@@ -1,7 +1,7 @@
 package com.instpay.app.Activities;
 
-import static com.instpay.app.App.ME;
-import static com.instpay.app.App.USER_TOKEN;
+import static com.instpay.app.App.MY_ACCOUNT;
+import static com.instpay.app.App.MY_TOKEN;
 import static com.instpay.app.App.requestQueue;
 
 import android.app.DatePickerDialog;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
@@ -87,12 +86,78 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            binding.detailsArea.setVisibility(View.GONE);
-            binding.passwordArea.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Checking email.", Toast.LENGTH_SHORT).show();
+            binding.setPin.setEnabled(false);
+            JsonObjectRequest checkEmail = new JsonObjectRequest(Request.Method.POST, getString(R.string.send_otp_url), null, response -> {
+                try {
+                    if (response.getBoolean("status")){
+                        binding.detailsArea.setVisibility(View.GONE);
+                        binding.passwordArea.setVisibility(View.VISIBLE);
+                        binding.createPin.setEnabled(false);
+                        binding.confirmPin.setEnabled(false);
+                        binding.keepLoggedInSignUp.setEnabled(false);
+                        binding.submit.setEnabled(false);
+                    } else {
+                        binding.setPin.setEnabled(true);
+                    }
+                    Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {e.printStackTrace();}
+            }, error -> {
+                Log.d(TAG, "error: ", error);
+                binding.setPin.setEnabled(true);
+            }){
+                @Override
+                public byte[] getBody() {
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("email", binding.uEmail.getText().toString().trim());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    return object.toString().getBytes(StandardCharsets.UTF_8);
+                }
+            };
+            requestQueue.add(checkEmail);
         });
         binding.back.setOnClickListener(v -> {
             binding.detailsArea.setVisibility(View.VISIBLE);
             binding.passwordArea.setVisibility(View.GONE);
+            binding.setPin.setEnabled(true);
+        });
+        binding.verifyBtn.setOnClickListener(v -> {
+            binding.verifyBtn.setEnabled(false);
+            JsonObjectRequest verifyOTP = new JsonObjectRequest(Request.Method.POST, getString(R.string.verify_otp_url), null, response -> {
+                try {
+                    if (response.getBoolean("status")){
+                        binding.otp.setEnabled(false);
+                        binding.verifyBtn.setEnabled(false);
+                        binding.createPin.setEnabled(true);
+                        binding.confirmPin.setEnabled(true);
+                        binding.keepLoggedInSignUp.setEnabled(true);
+                        binding.submit.setEnabled(true);
+                        binding.back.setEnabled(false);
+                    } else {
+                        binding.verifyBtn.setEnabled(true);
+                    }
+                    Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {e.printStackTrace();}
+            }, error -> {
+                Log.d(TAG, "error: ", error);
+                binding.verifyBtn.setEnabled(true);
+            }){
+                @Override
+                public byte[] getBody() {
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("email", binding.uEmail.getText().toString().trim());
+                        object.put("otp", binding.otp.getText().toString().trim());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    return object.toString().getBytes(StandardCharsets.UTF_8);
+                }
+            };
+            requestQueue.add(verifyOTP);
         });
         binding.submit.setOnClickListener(v -> {
             if (binding.createPin.getText().toString().trim().length() < 6){
@@ -104,8 +169,13 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
+            binding.submit.setEnabled(false);
             JsonObjectRequest authRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.auth_signup_url), null, authResponse -> {
-                try { USER_TOKEN = authResponse.getString("token"); } catch (JSONException e) { e.printStackTrace(); }
+                try {
+                    MY_ACCOUNT = authResponse.getString("account");
+                    MY_TOKEN = authResponse.getString("token");
+                } catch (JSONException e) { e.printStackTrace(); }
+
                 if (binding.keepLoggedInSignUp.isChecked()){
                     SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.shared_preference_auth), MODE_PRIVATE).edit();
                     try {
@@ -115,29 +185,12 @@ public class SignupActivity extends AppCompatActivity {
                     editor.apply();
                 }
 
-                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.my_account_url), null, userResponse -> {
-                    ME = new Gson().fromJson(userResponse.toString(), User.class);
-                    startActivity(new Intent(this, HomeActivity.class));
-                    finish();
-                }, error -> {
-                    Log.d(TAG, "error: ", error);
-                }){
-                    @Override
-                    public byte[] getBody() {
-                        JSONObject object = new JSONObject();
-                        try {
-                            object.put("account", authResponse.getString("account"));
-                            object.put("token", authResponse.getString("token"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        return object.toString().getBytes(StandardCharsets.UTF_8);
-                    }
-                };
-                userRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                requestQueue.add(userRequest);
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+
             }, error -> {
                 Log.d(TAG, "error: ", error);
+                binding.submit.setEnabled(true);
             }){
                 @Override
                 public byte[] getBody() {

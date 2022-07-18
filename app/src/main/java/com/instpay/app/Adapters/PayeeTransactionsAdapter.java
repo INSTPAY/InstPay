@@ -6,6 +6,7 @@ import static com.instpay.app.App.mongoDbDateConverter;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -49,9 +50,16 @@ public class PayeeTransactionsAdapter extends RecyclerView.Adapter<PayeeTransact
 
         holder.binding.payeeTransactionContainer.setBackground((transactions.get(position).getTo().equals(ME.getAccount())) ? ContextCompat.getDrawable(context, R.drawable.bubble_receiver) : ContextCompat.getDrawable(context, R.drawable.bubble_sender));
 
-        holder.binding.paymentTitle.setText((transactions.get(position).getTo().equals(ME.getAccount())) ? String.format(Locale.getDefault(), "Received from %s", payee.getName()) : String.format(Locale.getDefault(), "Paid to %s", payee.getName()));
+        holder.binding.paymentTitle.setText((transactions.get(position).getTo().equals(ME.getAccount())) ? String.format(Locale.getDefault(), "Received from %s", payee.getName()) : String.format(Locale.getDefault(), "Send to %s", payee.getName()));
         holder.binding.amount.setText(String.format(Locale.getDefault(), "%.02f", transactions.get(position).getAmount()));
         holder.binding.paymentTime.setText(mongoDbDateConverter("MMMM dd, yyyy - hh:mm aa", transactions.get(position).getCreatedAt()));
+        holder.binding.paymentNote.setText(transactions.get(position).getNote());
+
+        if (transactions.get(position).getNote() != null && !transactions.get(position).getNote().isEmpty()) {
+            holder.binding.paymentNote.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.paymentNote.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(v -> listener.OnClickListener(transactions.get(position)));
     }

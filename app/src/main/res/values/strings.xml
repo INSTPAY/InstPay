@@ -10,5 +10,7 @@
     <string name="payment_url">https://api.instpay.repl.co/payment/send</string>
     <string name="all_transactions_url">https://api.instpay.repl.co/payment/transactions</string>
     <string name="all_payees_url">https://api.instpay.repl.co/payment/payees</string>
-    <string name="payees_transactions">https://api.instpay.repl.co/payment/payees/transactions</string>
+    <string name="payees_transactions_url">https://api.instpay.repl.co/payment/payees/transactions</string>
+    <string name="send_otp_url">https://api.instpay.repl.co/verify/email/sendotp</string>
+    <string name="verify_otp_url">https://api.instpay.repl.co/verify/email/verifyotp</string>
 </resources>
